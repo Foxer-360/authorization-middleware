@@ -1,6 +1,6 @@
 {
   "name": "foxer360-authorization",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Authorization graphql middleware",
   "main": "dist/index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
     "babel-eslint": "^8.2.6",
@@ -28,8 +29,6 @@
   "author": "Michal Kudrnac",
   "license": "ISC",
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "authorization-middleware": "git+ssh://git@github.com/Foxer-360/authorization-middleware.git",
     "graphql-request": "^1.8.2"
   }
 }
