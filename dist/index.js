@@ -9,6 +9,8 @@ exports.default = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _graphqlRequest = require("graphql-request");
@@ -28,34 +30,31 @@ var _default = function _default(authorizationServiceUrl) {
               case 0:
                 gqlOperation = info.operation;
                 authorizationToken = context && context.headers && context.headers.authorization || context && context.request && context.request.headers && context.request.headers.authorization;
-
-                if (!authorizationToken) {
-                  _context.next = 10;
-                  break;
-                }
-
-                idToken = authorizationToken.includes('Bearer ') ? authorizationToken.replace('Bearer ', '') : authorizationToken;
-                _context.next = 6;
-                return (0, _graphqlRequest.request)(authorizationServiceUrl, "\n      query($idToken: String!, $gqlOperation: Json!) {\n        hasUserPermission(idToken: $idToken gqlOperation: $gqlOperation)\n      }\n      ", {
-                  idToken: idToken,
+                idToken = authorizationToken && authorizationToken.includes('Bearer ') ? authorizationToken.replace('Bearer ', '') : authorizationToken;
+                _context.next = 5;
+                return (0, _graphqlRequest.request)(authorizationServiceUrl, "\n    query($idToken: String, $isUserAnonymous: Boolean, $gqlOperation: Json!) {\n      hasUserPermission(idToken: $idToken  isUserAnonymous: $isUserAnonymous gqlOperation: $gqlOperation)\n    }\n    ", (0, _objectSpread2.default)({}, idToken ? {
+                  idToken: idToken
+                } : {
+                  isUserAnonymous: true
+                }, {
                   gqlOperation: gqlOperation
-                });
+                }));
 
-              case 6:
+              case 5:
                 _ref2 = _context.sent;
                 hasUserPermission = _ref2.hasUserPermission;
 
                 if (!hasUserPermission) {
-                  _context.next = 10;
+                  _context.next = 9;
                   break;
                 }
 
                 return _context.abrupt("return", resolve(root, args, context, info));
 
-              case 10:
+              case 9:
                 throw Error('User hasn\'t permissions.');
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
