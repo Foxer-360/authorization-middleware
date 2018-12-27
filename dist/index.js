@@ -20,41 +20,42 @@ var _default = function _default(authorizationServiceUrl) {
       var _ref = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee(resolve, root, args, context, info) {
-        var gqlOperation, idToken, _ref2, hasUserPermission;
+        var gqlOperation, authorizationToken, idToken, _ref2, hasUserPermission;
 
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 gqlOperation = info.operation;
+                authorizationToken = context && context.headers && context.headers.authorization || context && context.request && context.request.headers && context.request.headers.authorization;
 
-                if (!context.request.headers.authorization) {
-                  _context.next = 9;
+                if (!authorizationToken) {
+                  _context.next = 10;
                   break;
                 }
 
-                idToken = context.request.headers.authorization.includes('Bearer ') ? context.request.headers.authorization.replace('Bearer ', '') : context.request.headers.authorization;
-                _context.next = 5;
+                idToken = authorizationToken.includes('Bearer ') ? authorizationToken.replace('Bearer ', '') : authorizationToken;
+                _context.next = 6;
                 return (0, _graphqlRequest.request)(authorizationServiceUrl, "\n      query($idToken: String!, $gqlOperation: Json!) {\n        hasUserPermission(idToken: $idToken gqlOperation: $gqlOperation)\n      }\n      ", {
                   idToken: idToken,
                   gqlOperation: gqlOperation
                 });
 
-              case 5:
+              case 6:
                 _ref2 = _context.sent;
                 hasUserPermission = _ref2.hasUserPermission;
 
                 if (!hasUserPermission) {
-                  _context.next = 9;
+                  _context.next = 10;
                   break;
                 }
 
                 return _context.abrupt("return", resolve(root, args, context, info));
 
-              case 9:
+              case 10:
                 throw Error('User hasn\'t permissions.');
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
