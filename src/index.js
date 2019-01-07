@@ -13,19 +13,19 @@ export default authorizationServiceUrl => async (resolve, root, args, context, i
     && context.request.headers.authorization
   );
 
-  const idToken = authorizationToken && authorizationToken.includes('Bearer ')
+  const token = authorizationToken && authorizationToken.includes('Bearer ')
     ? authorizationToken.replace('Bearer ', '')
     : authorizationToken;
 
   const { hasUserPermission } = await request(
     authorizationServiceUrl,
     `
-    query($idToken: String, $isUserAnonymous: Boolean, $gqlOperation: Json!) {
-      hasUserPermission(idToken: $idToken  isUserAnonymous: $isUserAnonymous gqlOperation: $gqlOperation)
+    query($token: String, $isUserAnonymous: Boolean, $gqlOperation: Json!) {
+      hasUserPermission(token: $token  isUserAnonymous: $isUserAnonymous gqlOperation: $gqlOperation)
     }
     `,
     {
-      ...(idToken ? { idToken } : { isUserAnonymous: true }),
+      ...(token ? { token } : { isUserAnonymous: true }),
       gqlOperation,
     },
   );
