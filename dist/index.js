@@ -22,7 +22,7 @@ var _default = function _default(authorizationServiceUrl) {
       var _ref = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee(resolve, root, args, context, info) {
-        var gqlOperation, authorizationToken, idToken, _ref2, hasUserPermission;
+        var gqlOperation, authorizationToken, token, _ref2, hasUserPermission;
 
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
@@ -30,10 +30,10 @@ var _default = function _default(authorizationServiceUrl) {
               case 0:
                 gqlOperation = info.operation;
                 authorizationToken = context && context.headers && context.headers.authorization || context && context.request && context.request.headers && context.request.headers.authorization;
-                idToken = authorizationToken && authorizationToken.includes('Bearer ') ? authorizationToken.replace('Bearer ', '') : authorizationToken;
+                token = authorizationToken && authorizationToken.includes('Bearer ') ? authorizationToken.replace('Bearer ', '') : authorizationToken;
                 _context.next = 5;
-                return (0, _graphqlRequest.request)(authorizationServiceUrl, "\n    query($idToken: String, $isUserAnonymous: Boolean, $gqlOperation: Json!) {\n      hasUserPermission(idToken: $idToken  isUserAnonymous: $isUserAnonymous gqlOperation: $gqlOperation)\n    }\n    ", (0, _objectSpread2.default)({}, idToken ? {
-                  idToken: idToken
+                return (0, _graphqlRequest.request)(authorizationServiceUrl, "\n    query($token: String, $isUserAnonymous: Boolean, $gqlOperation: Json!) {\n      hasUserPermission(token: $token  isUserAnonymous: $isUserAnonymous gqlOperation: $gqlOperation)\n    }\n    ", (0, _objectSpread2.default)({}, token ? {
+                  token: token
                 } : {
                   isUserAnonymous: true
                 }, {

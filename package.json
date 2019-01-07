@@ -1,6 +1,6 @@
 {
   "name": "foxer360-authorization",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Authorization graphql middleware",
   "main": "dist/index.js",
   "scripts": {
